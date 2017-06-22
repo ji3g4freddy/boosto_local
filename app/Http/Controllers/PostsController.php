@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Post;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -14,17 +15,15 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //Display in the admin
     public function index()
     {
-        // get all the posts
-        // $posts = Post::all();
-        //$posts = DB::table('posts')->get();
-        $posts = new POST();
-        //一些條件
-        $posts = $posts -> join('users','users.id','=','posts.user_id');
-        $posts = $posts -> get();
-        //$posts = Post::where('user_id', $request->user()->id)->get();
-
+        $loginID = Auth::id();
+        //join the users table and get all the posts
+        $posts = POST::join('users','posts.user_id','=','users.id')
+                    ->select('posts.*','users.name')
+                    ->where('users.id', '=', $loginID )
+                    ->get();
         // load the view and pass the posts
         return view('posts.index')
             ->with('posts', $posts);
@@ -51,11 +50,29 @@ class PostsController extends Controller
     {
         //
         $request->user()->posts()->create([
-                'title' => $request->title,
-                'content' => $request->content
+                'studio' => $request->studio,
+                'content' => $request->content,
+                'equip' => $request->equip,
+                'level' => $request->level,
+                'price' => $request->price,
+                'place' => $request->place,
+                'style1' => $request->style1,
+                'style2' => $request->style2,
+                'style3' => $request->style3,
+                'link1' => $request->link1,
+                'link2' => $request->link2,
+                'link3' => $request->link3,
+                'logo' => $request->logo->getClientOriginalName(),
+                'image' =>$request->image->getClientOriginalName()
             ]);
         // $post = Post::create($request->all());
+        $logoName =  $request->logo->getClientOriginalName();
+        $imageName = $request->image->getClientOriginalName();
+        $request->logo->move(public_path('img/logo'), $logoName);
+        $request->image->move(public_path('img/studio'), $imageName);
 
+        // $request->file('image')->getClientOriginalExtension();
+        // $request->file('image')->move(public_path('img'));
         return redirect()->route('posts.index');
     }
 
@@ -104,7 +121,71 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         // update the edit form
-        $post ->update($request->all());
+        if($request->hasFile('logo') && $request->hasFile('image')){
+            $post ->update([
+                'studio' => $request->studio,
+                'content' => $request->content,
+                'equip' => $request->equip,
+                'level' => $request->level,
+                'price' => $request->price,
+                'place' => $request->place,
+                'style1' => $request->style1,
+                'style2' => $request->style2,
+                'style3' => $request->style3,
+                'link1' => $request->link1,
+                'link2' => $request->link2,
+                'link3' => $request->link3,
+                'logo' => $request->logo->getClientOriginalName(),
+                'image' =>$request->image->getClientOriginalName()
+                ]);
+                // $post = Post::create($request->all());
+                $logoName =  $request->logo->getClientOriginalName();
+                $imageName = $request->image->getClientOriginalName();
+                $request->logo->move(public_path('img/logo'), $logoName);
+                $request->image->move(public_path('img/studio'), $imageName);
+
+        }elseif($request->hasFile('logo')){
+            $post ->update(['studio' => $request->studio,
+                'content' => $request->content,
+                'equip' => $request->equip,
+                'level' => $request->level,
+                'price' => $request->price,
+                'place' => $request->place,
+                'style1' => $request->style1,
+                'style2' => $request->style2,
+                'style3' => $request->style3,
+                'link1' => $request->link1,
+                'link2' => $request->link2,
+                'link3' => $request->link3,
+                'logo' => $request->logo->getClientOriginalName(),
+                ]);
+                // $post = Post::create($request->all());
+                $logoName =  $request->logo->getClientOriginalName();
+                $request->logo->move(public_path('img/logo'), $logoName);
+
+        }elseif($request->hasFile('image')){
+            $post ->update([
+                'studio' => $request->studio,
+                'content' => $request->content,
+                'equip' => $request->equip,
+                'level' => $request->level,
+                'price' => $request->price,
+                'place' => $request->place,
+                'style1' => $request->style1,
+                'style2' => $request->style2,
+                'style3' => $request->style3,
+                'link1' => $request->link1,
+                'link2' => $request->link2,
+                'link3' => $request->link3,
+                'image' =>$request->image->getClientOriginalName()
+                ]);
+                // $post = Post::create($request->all());
+                $imageName = $request->image->getClientOriginalName();
+                $request->image->move(public_path('img/studio'), $imageName);
+        }else{
+            $post ->update($request->except('logo','image'));
+          }
+
         // redirect to the show page
         return redirect()->route('posts.show',$id);
 

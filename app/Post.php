@@ -3,16 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Actuallymab\LaravelComment\Commentable;
 
 class Post extends Model
 {
     //
     protected $table = 'posts';
-    protected $fillable = ['title', 'content', 'created_at', 'updated_at'];
+    protected $guarded = ['user_id'];
 
      public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User');
     }
+
 
 }

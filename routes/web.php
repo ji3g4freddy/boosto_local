@@ -11,13 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-return view('welcome');
-});
+// Route::get('/', function () {
+// return view('welcome');
+// });
 
 Route::group(['middleware' => 'auth'], function() {
 Route::resource('posts', 'PostsController');
+Route::resource('articles', 'ArticlesController');
+Route::resource('contests', 'ContestsController');
+//Route::resource('comments', 'CommentsController');
 });
 
 Auth::routes();
 Route::get('/home', 'HomeController@index');
+Route::get('/', 'StudiosController@welcome');
+Route::resource('studio','StudiosController');
+Route::resource('blog','BlogsController');
+Route::resource('competition','CompetitionsController');

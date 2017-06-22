@@ -180,6 +180,9 @@ return [
         // HTML Form
         Collective\Html\HtmlServiceProvider::class,
 
+        //comment package
+        \Actuallymab\LaravelComment\LaravelCommentServiceProvider::class
+
     ],
 
     /*

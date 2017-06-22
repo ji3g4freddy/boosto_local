@@ -25,16 +25,18 @@ class PostRequest extends FormRequest
     {
         return [
             //
-            'title' => 'required|unique:posts|max:255',
+        
+            'studio' => 'required',
             'content' => 'required',
+
         ];
     }
 
-    // public function messages()
-    // {
-    // return [
-    //     'title.required' => 'A title is required',
-    //     'content.required'  => 'A message is required',
-    // ];
-    // }
+    public function messages()
+    {
+    return [
+        'studio.required' => 'A title is required',
+        'content.required'  => 'A message is required',
+    ];
+    }
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Actuallymab\LaravelComment\CanComment;
 
 class User extends Authenticatable
 {
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'phone', 'password',
     ];
 
     /**
@@ -29,6 +30,14 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany('App\Post');
+    }
+    public function articles()
+    {
+        return $this->hasMany('App\Article');
+    }
+    public function contests()
+    {
+        return $this->hasMany('App\Contest');
     }
 }
