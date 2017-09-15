@@ -2,6 +2,11 @@
 <footer id="footer">
       <div class="container">
         <div class="row text-center">
+          <a href="{{ url('/login')}}" onmouseover='this.style.color="#88b04b"' 
+    onmouseout='this.style.color="white"' class="btn btn-download" style="color:white;">我想刊登資訊</a> 
+        </div>
+        <hr>
+        <div class="row text-center">
           <p>Copyright &copy; BoostO 2017<a href="https://www.facebook.com/boosto/"><i class="fa fa-facebook-square fa-fw fa-2x"></i></a><a href="https://www.youtube.com/channel/UCcN4Xqc_9a5bhsfHRcX0QdQ"><i class="fa fa-youtube-play fa-fw fa-2x"></i></a>
           </p>
         </div>

@@ -14,11 +14,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!--360 photo-->
     <link rel="stylesheet" href="https://cdn.pannellum.org/2.2/pannellum.css"/>
-    <script type="text/javascript" src="https://cdn.pannellum.org/2.2/pannellum.js">        
-    </script>
+    <script type="text/javascript" src="https://cdn.pannellum.org/2.2/pannellum.js"></script>
+
     <style>
     #panorama {
         width: 330px;
@@ -34,8 +36,8 @@
 
     p{
         font-size: 18px;
+        white-space:pre-wrap;
     }
-
     .pnlm-title-box {
     position: relative;
     font-size: 40px;
@@ -70,7 +72,6 @@
         @yield('content')
         </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    
 </body>
 </html>

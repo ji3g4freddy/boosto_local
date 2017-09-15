@@ -19,6 +19,7 @@ class BlogsController extends Controller
         //join the users table and get all the posts
         $blogs = Article::join('users','articles.user_id','=','users.id')
                     ->select('articles.*','users.name')
+                    ->where('articles.verify', '=', 1 )
                     ->get();
         // load the view and pass the posts
         return view('blog.index')

@@ -24,9 +24,14 @@ class PostsController extends Controller
                     ->select('posts.*','users.name')
                     ->where('users.id', '=', $loginID )
                     ->get();
+        $s_posts = POST::join('users','posts.user_id','=','users.id')
+                    ->select('posts.*','users.name')
+                    ->orderBy('posts.verify', 'asc')
+                    ->get();        
         // load the view and pass the posts
         return view('posts.index')
-            ->with('posts', $posts);
+            ->with('posts', $posts)
+            ->with('s_posts', $s_posts);
     }
 
     /**
@@ -49,6 +54,18 @@ class PostsController extends Controller
     public function store(PostRequest $request)
     {
         //
+        if($request->hasFile('logo')){
+            $logoName =  $request->logo->getClientOriginalName();
+            $request->logo->move(public_path('img/logo'), $logoName);
+        }else{
+            $logoName = '';
+        }
+        if($request->hasFile('image')){
+            $imageName = $request->image->getClientOriginalName();
+            $request->image->move(public_path('img/studio'), $imageName);
+        }else{
+            $imageName = '';
+        }
         $request->user()->posts()->create([
                 'studio' => $request->studio,
                 'content' => $request->content,
@@ -62,15 +79,13 @@ class PostsController extends Controller
                 'link1' => $request->link1,
                 'link2' => $request->link2,
                 'link3' => $request->link3,
-                'logo' => $request->logo->getClientOriginalName(),
-                'image' =>$request->image->getClientOriginalName()
+                'logo' => $logoName,
+                'image' => $imageName
+                //'logo' => $request->logo->getClientOriginalName(),
+                //'image' =>$request->image->getClientOriginalName()
             ]);
         // $post = Post::create($request->all());
-        $logoName =  $request->logo->getClientOriginalName();
-        $imageName = $request->image->getClientOriginalName();
-        $request->logo->move(public_path('img/logo'), $logoName);
-        $request->image->move(public_path('img/studio'), $imageName);
-
+        
         // $request->file('image')->getClientOriginalExtension();
         // $request->file('image')->move(public_path('img'));
         return redirect()->route('posts.index');
@@ -190,7 +205,30 @@ class PostsController extends Controller
         return redirect()->route('posts.show',$id);
 
     }
+    public function verify($id)
+    {
+        // delete
+        $post = Post::find($id);
+        $post->update(['verify' => 1]);
 
+        // redirect
+        // \Session::flash('message', 'Successfully deleted the post!');
+        session()->flash('message', '成功完成審核!');
+
+        return redirect()->route('posts.index');
+    }
+    public function verify_no($id)
+    {
+        // delete
+        $post = Post::find($id);
+        $post->update(['verify' => 2]);
+
+        // redirect
+        // \Session::flash('message', 'Successfully deleted the post!');
+        session()->flash('message', '請通知該用戶審核未通過原因!');
+
+        return redirect()->route('posts.index');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -205,7 +243,7 @@ class PostsController extends Controller
 
         // redirect
         // \Session::flash('message', 'Successfully deleted the post!');
-        session()->flash('message', 'Successfully deleted the post!');
+        session()->flash('message', '成功刪除錄音室!');
 
         return redirect()->route('posts.index');
     }

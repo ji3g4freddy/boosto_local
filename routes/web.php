@@ -17,8 +17,14 @@
 
 Route::group(['middleware' => 'auth'], function() {
 Route::resource('posts', 'PostsController');
+Route::patch('verify/{post}', 'PostsController@verify');
+Route::patch('verify_no/{post}', 'PostsController@verify_no');
 Route::resource('articles', 'ArticlesController');
+Route::patch('verifya/{article}', 'ArticlesController@verify');
+Route::patch('verifya_no/{article}', 'ArticlesController@verify_no');
 Route::resource('contests', 'ContestsController');
+Route::patch('verifyc/{contest}', 'ContestsController@verify');
+Route::patch('verifyc_no/{contest}', 'ContestsController@verify_no');
 //Route::resource('comments', 'CommentsController');
 });
 

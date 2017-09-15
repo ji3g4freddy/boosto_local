@@ -10,6 +10,26 @@
 @endsection
 @section('content')
 @include('layouts.partials2.jumbotron')
+<br><br><br>
+{{ Form::open(['method' => 'get']) }}
+  <div class="row">
+        <div class="col-xs-6 col-md-3 form-group">
+        </div>
+        <div class="col-xs-6 col-md-3 form-group">
+            {!! Form::label('from','金額下限',['class' => 'control-label']) !!}
+            {!! Form::number('from', old('from', Request::get('from', date('Y-m'))), ['class' => 'form-control date', 'placeholder' => '']) !!}
+        </div>
+        <div class="col-xs-6 col-md-3 form-group">
+            {!! Form::label('to','金額上限',['class' => 'control-label']) !!}
+            {!! Form::number('to', old('to', Request::get('to', date('Y-m'))), ['class' => 'form-control date', 'placeholder' => '']) !!}
+        </div>
+        <div class="col-xs-6 col-md-3 form-group" style="padding-top: 25px;">
+            {{ Form::submit('搜尋', array('class' => 'btn btn-small btn-success')) }}
+        </div>
+  </div>
+{{ Form::close() }}
+
+<hr>
 <section id="studio" class="section-padding wow fadeInUp delay-05s">
   <div class="container">
     <div class="row">

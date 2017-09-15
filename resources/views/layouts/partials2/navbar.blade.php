@@ -12,13 +12,13 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="{{url('/')}}">首頁</a></li>
+                <li class=""><a href="{{url('/')}}">首頁</a></li>
                 <li class=""><a href="{{ url('/studio')}}">BoostO錄音室</a></li>
                 <li class=""><a href="{{ url('/blog')}}">部落格</a></li>
                 <li class=""><a href="{{ url('/competition')}}">合作比賽</a></li>
                 <li class=""><a href="{{ url('/#service')}}">服務願景</a></li>
                 <li class=""><a href="{{ url('/#contact')}}">聯絡我們</a></li>
-                <li class=""><a href="{{ url('/login') }}">錄音室管理</a></li>
+                <li class="active"><a href="{{ url('/login') }}">會員登入</a></li>
               </ul>
             </div>
           </div>

@@ -26,15 +26,17 @@
         <br><br><br>
             <div class="row">
             <div class="col-md-12 col-sm-12 portfolio-item">
-                <img src="{{ asset('img/blog_image/'.$blog->image)}}" style="min-width: 100%; height: auto;">
+                <img src="{{ asset('img/blog_image/'.$blog->image)}}" style="width: 80%; height: auto;">
             </div>
             </div>
             <br><br><br>
+            <hr>
             <div class="row">
             <div class="col-lg-12">
                 <p>{{ $blog->content }}</p>
             </div>
             <br><br><br>
         </div>
+        <br><br>
     </section> 
 @endsection

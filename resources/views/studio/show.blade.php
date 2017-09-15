@@ -17,6 +17,11 @@
             <div class="row">
             <div class="col-md-12 col-sm-12 portfolio-item">
                 <div id="panorama"></div>
+                <style type="text/css">
+                    .portfolio-item{
+                        text-align: left;
+                    }
+                </style>
                 <script>
                 pannellum.viewer('panorama', {
                 "type": "equirectangular",

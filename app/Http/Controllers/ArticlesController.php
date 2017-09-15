@@ -24,9 +24,14 @@ class ArticlesController extends Controller
                     ->select('articles.*','users.name')
                     ->where('users.id', '=', $loginID )
                     ->get();
+        $s_articles = Article::join('users','articles.user_id','=','users.id')
+                    ->select('articles.*','users.name')
+                    ->orderBy('articles.verify', 'asc')
+                    ->get();        
         // load the view and pass the articles
         return view('articles.index')
-            ->with('articles', $articles);
+            ->with('articles', $articles)
+            ->with('s_articles', $s_articles);
     }
 
     /**
@@ -151,6 +156,30 @@ class ArticlesController extends Controller
 
     }
 
+    public function verify($id)
+    {
+        // delete
+        $article = Article::find($id);
+        $article->update(['verify' => 1]);
+
+        // redirect
+        // \Session::flash('message', 'Successfully deleted the article!');
+        session()->flash('message', '成功完成審核!');
+
+        return redirect()->route('articles.index');
+    }
+    public function verify_no($id)
+    {
+        // delete
+        $article = Article::find($id);
+        $article->update(['verify' => 2]);
+
+        // redirect
+        // \Session::flash('message', 'Successfully deleted the article!');
+        session()->flash('message', '請通知該用戶審核未通過原因!');
+
+        return redirect()->route('articles.index');
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -37,7 +37,6 @@
                     <p>作者: <span>{{ $value->name }}</span></p>
                 </div>
                 <p>{{ $value->hashtag }}</p>
-                <a href="" class="read-more">Read more →</a>
               </div>
             </div>
           </div>

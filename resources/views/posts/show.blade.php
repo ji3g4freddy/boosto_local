@@ -18,7 +18,7 @@
                 <script>
                 pannellum.viewer('panorama', {
                 "type": "equirectangular",
-                "panorama": "{{url('img/'.$post->image)}}",
+                "panorama": "{{url('img/studio/'.$post->image)}}",
                 "title": "${{ $post->price }} TWD/小時",
                 "autoLoad": true,
                 "autoRotate": -1,

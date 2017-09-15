@@ -20,6 +20,7 @@ class CompetitionsController extends Controller
         //join the users table and get all the contests
         $competitions = Contest::join('users','contests.user_id','=','users.id')
                     ->select('contests.*','users.name')
+                    ->where('contests.verify', '=', 1 )
                     ->get();
         // load the view and pass the contests
         return view('competition.index')

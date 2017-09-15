@@ -22,13 +22,18 @@ class ContestsController extends Controller
     {
         $loginID = Auth::id();
         //join the users table and get all the contests
-        $contests = contest::join('users','contests.user_id','=','users.id')
+        $contests = Contest::join('users','contests.user_id','=','users.id')
                     ->select('contests.*','users.name')
                     ->where('users.id', '=', $loginID )
                     ->get();
+        $s_contests = Contest::join('users','contests.user_id','=','users.id')
+                    ->select('contests.*','users.name')
+                    ->orderBy('contests.verify', 'asc')
+                    ->get();   
         // load the view and pass the contests
         return view('contests.index')
-            ->with('contests', $contests);
+            ->with('contests', $contests)
+            ->with('s_contests', $s_contests);
     }
 
     /**
@@ -83,7 +88,7 @@ class ContestsController extends Controller
         $contest = contest::find($id);
 
         // show the view and pass the contest to it
-        return view('competition.show')
+        return view('contests.show')
             ->with('contest', $contest);
     }
 
@@ -169,6 +174,30 @@ class ContestsController extends Controller
 
     }
 
+    public function verify($id)
+    {
+        // delete
+        $contest = Contest::find($id);
+        $contest->update(['verify' => 1]);
+
+        // redirect
+        // \Session::flash('message', 'Successfully deleted the contest!');
+        session()->flash('message', '成功完成審核!');
+
+        return redirect()->route('contests.index');
+    }
+    public function verify_no($id)
+    {
+        // delete
+        $contest = Contest::find($id);
+        $contest->update(['verify' => 2]);
+
+        // redirect
+        // \Session::flash('message', 'Successfully deleted the contest!');
+        session()->flash('message', '請通知該用戶審核未通過原因!');
+
+        return redirect()->route('contests.index');
+    }
     /**
      * Remove the specified resource from storage.
      *
